@@ -9,7 +9,8 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({ data }) => {
   return (
     <div>
       <QRCode value={data} />
-      <p className="">===========================</p>
+      <p className="text-center">============================</p> 
+      <p className="text-center">powered by Citiserve</p>
     </div>
   );
 };

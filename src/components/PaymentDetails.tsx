@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface PaymentDetailsProps {
-  shf: string; // Single Haulage Fee
   payerId: string;
   phoneNumber: string;
   vehicleNumber: string;
@@ -20,7 +19,6 @@ interface PaymentDetailsProps {
 }
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
-  shf,
   payerId,
   phoneNumber,
   vehicleNumber,
@@ -39,18 +37,14 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
 }) => {
   const [hours, minutes, seconds] = time.split(':');
   const twelveHourTime =
-    parseInt(hours) > 24
-      ? `${parseInt(hours) - 24}:${minutes}:${seconds} PM`
-      : parseInt(hours) === 0
-      ? `24:${minutes}:${seconds} AM`
+    parseInt(hours) >= 12
+      ? `${parseInt(hours) - 12}:${minutes}:${seconds} PM`
       : `${hours}:${minutes}:${seconds} AM`;
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-lg font-bold mb-2">Payment Details</h2>
-      <p>SHF: {shf}</p>
       <p>Date: {date} {twelveHourTime}</p>
-      <p className="">===========================</p>
+      <p>============================</p>
       <p>Payer ID: {payerId}</p>
       <p>Phone Number: {phoneNumber}</p>
       <p>Vehicle Number: {vehicleNumber}</p>
@@ -63,11 +57,11 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <p>Transaction Reference: {transactionReference}</p>
       <p>Terminal ID: {terminalId}</p>
       <p>Date: {date} {twelveHourTime}</p>
-      <p className="">===========================</p>
-      <p className='text-2xl'>Amount Paid: ₦{amountPaid.toFixed(2)}</p>
-      <p>Status: {status}</p>
+      <p>============================</p>
+      <p className="text-2xl font-bold">Amount Paid: ₦{amountPaid.toFixed(2)}</p>
+      <p className="font-bold text-2xl">Status: {status}</p>
     </div>
   );
 };
 
-export default PaymentDetails;
+export default PaymentDetails
