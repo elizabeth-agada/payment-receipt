@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/PaymentDetails.tsx","./src/components/PaymentForm.tsx","./src/components/PrintButton.tsx","./src/components/QRCode.tsx"],"version":"5.6.2"}
