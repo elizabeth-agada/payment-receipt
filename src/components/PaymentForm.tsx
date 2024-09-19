@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PaymentDetails from './PaymentDetails';
-import QRCode from './QRCode';
+
 
 const statesAndLgas: { [key: string]: string[] } = {
   Abia: ['Aba North', 'Aba South', 'Isiala Ngwa North', 'Isiala Ngwa South'],
   Adamawa: ['Demsa', 'Fufore', 'Ganye', 'Girei'],
-  "Akwa Ibom": ['Abak', 'Eastern Obolo', 'Eket', 'Esit Eket'],
+  AkwaIbom: ['Abak', 'Eastern Obolo', 'Eket', 'Esit Eket'],
   Anambra: ['Aguata', 'Awka North', 'Awka South', 'Dunukofia'],
   Bauchi: ['Bauchi', 'Bogoro', 'Dambam', 'Darazo'],
   Bayelsa: ['Brass', 'Ekeremor', 'Kolokuma/Opokuma', 'Nembe'],
@@ -54,36 +54,41 @@ const PaymentForm: React.FC = () => {
     contact: '',
     transactionReference: '',
     terminalId: '',
-    date: '',
-    time: '',
+    date: new Date().toISOString().slice(0, 10),
+    time: new Date().toLocaleTimeString('en-US', { hour12: false }),
     amountPaid: 0,
-    status: '',
+    status: 'Approved',
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [lgas, setLgas] = useState<string[]>([]);
+  const [qrData, setQrData] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'amountPaid' ? parseFloat(value) : value,
+      [name]: 
+ name === 'amountPaid' ? parseFloat(value) : value,
     }));
 
     if (name === 'originState' || name === 'destinationState') {
-      setFormData((prev) => ({
-        ...prev,
-        [`${name}Lga`]: '', // Reset the selected LGA when state changes
-      }));
       setLgas(statesAndLgas[value] || []); // Update LGAs based on the selected state
     }
   };
 
-  const [qrData, setQrData] = useState('');
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Validate form data before submitting
+    if (!formData.payerId || !formData.phoneNumber || !formData.vehicleNumber || !formData.vehicleType ||
+        !formData.originState || !formData.originLga || !formData.destinationState || !formData.destinationLga ||
+        !formData.contact || !formData.transactionReference || !formData.terminalId || !formData.date ||
+        !formData.time || formData.amountPaid <= 0) {
+      alert('Please fill in all required fields.');
+      return;
+    }
 
     // Format the data for the QR code according to the specified format
     const formattedQrData = `
@@ -119,14 +124,10 @@ Status: ${formData.status || ''}
 
   return (
     <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold text-center mb-6">SHF</h2>
-      <h2 className="text-2xl font-semibold text-center mb-6">Single Haulage Fee</h2>
       {!submitted ? (
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto grid grid-cols-1 gap-4">
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="payerId">Payer ID</label>
-            </div>
             <input
               type="text"
               id="payerId"
@@ -134,14 +135,12 @@ Status: ${formData.status || ''}
               required
               value={formData.payerId}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
             />
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="phoneNumber">Phone Number</label>
-            </div>
             <input
               type="tel"
               id="phoneNumber"
@@ -154,9 +153,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="vehicleNumber">Vehicle Number</label>
-            </div>
             <input
               type="text"
               id="vehicleNumber"
@@ -169,9 +166,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="vehicleType">Vehicle Type</label>
-            </div>
             <input
               type="text"
               id="vehicleType"
@@ -184,9 +179,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="originState">Origin State</label>
-            </div>
             <select
               id="originState"
               name="originState"
@@ -195,19 +188,15 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select State</option>
+              <option value="">Select a state</option>
               {Object.keys(statesAndLgas).map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
+                <option key={state} value={state}>{state}</option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="originLga">Origin LGA</label>
-            </div>
             <select
               id="originLga"
               name="originLga"
@@ -216,19 +205,15 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select LGA</option>
+              <option value="">Select an LGA</option>
               {lgas.map((lga) => (
-                <option key={lga} value={lga}>
-                  {lga}
-                </option>
+                <option key={lga} value={lga}>{lga}</option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="destinationState">Destination State</label>
-            </div>
             <select
               id="destinationState"
               name="destinationState"
@@ -237,19 +222,15 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select State</option>
+              <option value="">Select a state</option>
               {Object.keys(statesAndLgas).map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
+                <option key={state} value={state}>{state}</option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="destinationLga">Destination LGA</label>
-            </div>
             <select
               id="destinationLga"
               name="destinationLga"
@@ -258,19 +239,15 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select LGA</option>
+              <option value="">Select an LGA</option>
               {lgas.map((lga) => (
-                <option key={lga} value={lga}>
-                  {lga}
-                </option>
+                <option key={lga} value={lga}>{lga}</option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="contact">Contact</label>
-            </div>
             <input
               type="text"
               id="contact"
@@ -283,9 +260,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="transactionReference">Transaction Reference</label>
-            </div>
             <input
               type="text"
               id="transactionReference"
@@ -298,9 +273,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="terminalId">Terminal ID</label>
-            </div>
             <input
               type="text"
               id="terminalId"
@@ -313,9 +286,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="date">Date</label>
-            </div>
             <input
               type="date"
               id="date"
@@ -328,9 +299,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="time">Time</label>
-            </div>
             <input
               type="time"
               id="time"
@@ -343,9 +312,7 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="amountPaid">Amount Paid</label>
-            </div>
             <input
               type="number"
               id="amountPaid"
@@ -354,15 +321,11 @@ Status: ${formData.status || ''}
               value={formData.amountPaid}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              min="0"
-              step="0.01"
             />
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="status">Status</label>
-            </div>
             <input
               type="text"
               id="status"
@@ -374,15 +337,13 @@ Status: ${formData.status || ''}
             />
           </div>
 
-          <button type="submit" className="bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">
-            Generate QR Code
+          <button type="submit" className="mt-4 bg-blue-600 text-white rounded-lg p-3 hover:bg-blue-700">
+            Submit
           </button>
         </form>
       ) : (
-        <div className="mt-6">
-          <PaymentDetails {...formData} />
-          <QRCode data={qrData} />
-        </div>
+        <PaymentDetails qrData={qrData}
+        />
       )}
     </div>
   );

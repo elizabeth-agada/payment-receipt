@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface PaymentDetailsProps {
+  
   payerId: string;
   phoneNumber: string;
   vehicleNumber: string;
@@ -13,7 +14,7 @@ interface PaymentDetailsProps {
   transactionReference: string;
   terminalId: string;
   date: string;
-  time: string; // 24-hour format
+  time: string;
   amountPaid: number;
   status: string;
 }
@@ -35,16 +36,11 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   amountPaid,
   status,
 }) => {
-  const [hours, minutes, seconds] = time.split(':');
-  const twelveHourTime =
-    parseInt(hours) >= 12
-      ? `${parseInt(hours) - 12}:${minutes}:${seconds} PM`
-      : `${hours}:${minutes}:${seconds} AM`;
-
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
-      <p>Date: {date} {twelveHourTime}</p>
-      <p>============================</p>
+      <p>SHF</p>
+      <p className="">Single Haulage Fee</p>
+      <p>Date: {date} {time}</p>
       <p>Payer ID: {payerId}</p>
       <p>Phone Number: {phoneNumber}</p>
       <p>Vehicle Number: {vehicleNumber}</p>
@@ -56,12 +52,10 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <p>Contact: {contact}</p>
       <p>Transaction Reference: {transactionReference}</p>
       <p>Terminal ID: {terminalId}</p>
-      <p>Date: {date} {twelveHourTime}</p>
-      <p>============================</p>
-      <p className="text-2xl font-bold">Amount Paid: ₦{amountPaid.toFixed(2)}</p>
-      <p className="font-bold text-2xl">Status: {status}</p>
+      <p>Amount Paid: ₦{amountPaid.toFixed(2)}</p>
+      <p>Status: {status}</p>
     </div>
   );
 };
 
-export default PaymentDetails
+export default PaymentDetails;
