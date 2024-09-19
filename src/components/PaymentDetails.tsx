@@ -37,8 +37,8 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
 }) => {
   return (
     <div>
-      <p className="">SHF</p>
-      <p className="">Single Haulage Fee</p>
+      <p>SHF</p>
+      <p>Single Haulage Fee</p>
       <p>Date: {date}</p>
       <p>Time: {time}</p>
       <p className=""> ============================</p>
@@ -51,7 +51,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <p>Destination State: {destinationState}</p>
       <p>Destination LGA: {destinationLga}</p>
       <p>Contact: {contact}</p>
-      <p>Transaction Reference: {transactionReference}</p>
+      <p className='w-64'>Transaction Reference: {transactionReference}</p>
       <p>Terminal ID: {terminalId}</p>
       <p>Date: {date}</p>
       <p>Time: {time}</p>
