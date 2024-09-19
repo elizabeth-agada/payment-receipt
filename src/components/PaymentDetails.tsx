@@ -38,26 +38,26 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
 }) => {
   return (
     <div>
-      <p>SHF</p>
-      <p>Single Haulage Fee</p>
-      <p>Date: {date}</p>
-      <p>Time: {time}</p>
+      <p className='text-xs'>SHF</p>
+      <p className='text-xs>Single Haulage Fee</p>
+      <p className='text-xs>Date: {date}</p>
+      <p className='text-xs'>Time: {time}</p>
       <p className=""> ============================</p>
-      <p>Payer ID: {payerId}</p>
-      <p>Phone Number: {phoneNumber}</p>
-      <p>Vehicle Number: {vehicleNumber}</p>
+      <p className='text-xs'>Payer ID: {payerId}</p>
+      <p className='text-xs'>Phone Number: {phoneNumber}</p>
+      <p className='text-xs'>Vehicle Number: {vehicleNumber}</p>
       <p className='w-64'>Vehicle Type: {vehicleType}</p>
-      <p>Origin State: {originState}</p>
-      <p>Origin LGA: {originLga}</p>
-      <p>Destination State: {destinationState}</p>
-      <p>Destination LGA: {destinationLga}</p>
-      <p>Contact: {contact}</p>
+      <p className='text-xs'>Origin State: {originState}</p>
+      <p className='text-xs'>Origin LGA: {originLga}</p>
+      <p className='text-xs'>Destination State: {destinationState}</p>
+      <p className='text-xs'>Destination LGA: {destinationLga}</p>
+      <p className='text-xs'>Contact: {contact}</p>
       <p className='w-64'>Transaction Reference: {transactionReference}</p>
-      <p>Terminal ID: {terminalId}</p>
-      <p>Date: {date}</p>
-      <p>Time: {time}</p>
+      <p className='text-xs'>Terminal ID: {terminalId}</p>
+      <p className='text-xs'>Date: {date}</p>
+      <p className='text-xs'>Time: {time}</p>
       <p className=""> ============================</p>
-      <p>Amount Paid: {amountPaid}</p>
+      <p className='text-xs'>Amount Paid: {amountPaid}</p>
       <p className='font-semibold text-2xl'>Status: {status}</p>
     </div>
   );
