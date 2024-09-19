@@ -57,7 +57,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <p>Time: {time}</p>
       <p className=""> ============================</p>
       <p>Amount Paid: {amountPaid}</p>
-      <p className='font-bold text-2xl'>Status: {status}</p>
+      <p className='font-semibold text-2xl'>Status: {status}</p>
     </div>
   );
 };
