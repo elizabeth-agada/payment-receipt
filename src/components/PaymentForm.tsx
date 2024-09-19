@@ -170,7 +170,7 @@ const PaymentForm: React.FC = () => {
   return (
     <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg">
       {!submitted ? (
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 max-w-4xl mx-auto gap-4 p-5">
           <div className="flex flex-col">
             <div className="">
             <label className="mb-1 font-semibold" htmlFor="payerId">Payer ID</label>
@@ -423,7 +423,7 @@ const PaymentForm: React.FC = () => {
           </div>
 
           <button type="submit" className="bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">
-            Generate QR Code
+            Submit & Generate QR Code
           </button>
         </form>
       ) : (
