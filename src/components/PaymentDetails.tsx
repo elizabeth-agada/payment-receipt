@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface PaymentDetailsProps {
-  
   payerId: string;
   phoneNumber: string;
   vehicleNumber: string;
@@ -15,8 +14,8 @@ interface PaymentDetailsProps {
   terminalId: string;
   date: string;
   time: string;
-  amountPaid: number;
-  status: string;
+  amountPaid: string;
+  status?: string; // Make status optional
 }
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
@@ -34,17 +33,19 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   date,
   time,
   amountPaid,
-  status,
+  status = 'Not provided', // Default value
 }) => {
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
-      <p>SHF</p>
+    <div>
+      <p className="">SHF</p>
       <p className="">Single Haulage Fee</p>
-      <p>Date: {date} {time}</p>
+      <p>Date: {date}</p>
+      <p>Time: {time}</p>
+      <p className=""> ============================</p>
       <p>Payer ID: {payerId}</p>
       <p>Phone Number: {phoneNumber}</p>
       <p>Vehicle Number: {vehicleNumber}</p>
-      <p>Vehicle Type: {vehicleType}</p>
+      <p className='w-64'>Vehicle Type: {vehicleType}</p>
       <p>Origin State: {originState}</p>
       <p>Origin LGA: {originLga}</p>
       <p>Destination State: {destinationState}</p>
@@ -52,8 +53,11 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <p>Contact: {contact}</p>
       <p>Transaction Reference: {transactionReference}</p>
       <p>Terminal ID: {terminalId}</p>
-      <p>Amount Paid: ₦{amountPaid.toFixed(2)}</p>
-      <p>Status: {status}</p>
+      <p>Date: {date}</p>
+      <p>Time: {time}</p>
+      <p className=""> ============================</p>
+      <p>Amount Paid: {amountPaid}</p>
+      <p className='font-bold text-2xl'>Status: {status}</p>
     </div>
   );
 };

@@ -1,45 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PaymentDetails from './PaymentDetails';
+import QRCode from './QRCode';
 
 
+// States and their respective LGAs
 const statesAndLgas: { [key: string]: string[] } = {
-  Abia: ['Aba North', 'Aba South', 'Isiala Ngwa North', 'Isiala Ngwa South'],
-  Adamawa: ['Demsa', 'Fufore', 'Ganye', 'Girei'],
-  AkwaIbom: ['Abak', 'Eastern Obolo', 'Eket', 'Esit Eket'],
-  Anambra: ['Aguata', 'Awka North', 'Awka South', 'Dunukofia'],
-  Bauchi: ['Bauchi', 'Bogoro', 'Dambam', 'Darazo'],
-  Bayelsa: ['Brass', 'Ekeremor', 'Kolokuma/Opokuma', 'Nembe'],
-  Benue: ['Ado', 'Agatu', 'Apa', 'Buruku'],
-  Borno: ['Abadam', 'Askira/Uba', 'Bama', 'Bayo'],
-  CrossRiver: ['Abi', 'Akampka', 'Bakassi', 'Calabar South'],
-  Delta: ['Aniocha South', 'Burutu', 'Ika North-East', 'Isoko South'],
-  Ebonyi: ['Abakaliki', 'Ebonyi', 'Ezza North', 'Ishielu'],
-  Edo: ['Akoko-Edo', 'Esan Central', 'Esan North-East', 'Esan South-East'],
-  Ekiti: ['Ado Ekiti', 'Ekiti South-West', 'Ekiti East', 'Gboyin'],
-  Enugu: ['Enugu East', 'Enugu North', 'Enugu South', 'Igbo Etiti'],
-  Gombe: ['Akko', 'Balanga', 'Billiri', 'Dukku'],
-  Imo: ['Aboh Mbaise', 'Ahiazu Mbaise', 'Isu', 'Njaba'],
-  Jigawa: ['Babura', 'Dutse', 'Gwiwa', 'Hadejia'],
-  Kaduna: ['Chikun', 'Giwa', 'Igabi', 'Jaba'],
-  Kano: ['Ajingi', 'Albasu', 'Bagwai', 'Bebeji'],
-  Katsina: ['Batagarawa', 'Batsari', 'Baure', 'Dandume'],
-  Kebbi: ['Aliero', 'Arewa Dandi', 'Argungu', 'Bagudo'],
-  Kogi: ['Adavi', 'Ajaokuta', 'Bassa', 'Bunu'],
-  Kwara: ['Asa', 'Baruten', 'Ekiti', 'Ifelodun'],
-  Lagos: ['Agege', 'Ikeja', 'Ikorodu', 'Lagos Mainland'],
-  Nasarawa: ['Akwanga', 'Doma', 'Karu', 'Keana'],
-  Niger: ['Agwara', 'Bida', 'Borgu', 'Chanchaga'],
-  Ogun: ['Abeokuta North', 'Abeokuta South', 'Ado-Odo/Ota', 'Ewekoro'],
-  Ondo: ['Akoko North-West', 'Akoko South-West', 'Idanre', 'Ilaje'],
-  Osun: ['Atakunmosa East', 'Atakunmosa West', 'Ayedaade', 'Ilesa East'],
-  Oyo: ['Akinyele', 'Atiba', 'Ayede', 'Bode Saadu'],
-  Plateau: ['Bokkos', 'Jos East', 'Jos North', 'Mangu'],
-  Rivers: ['Abua/Odual', 'Ahoada East', 'Ahoada West', 'Akuku-Toru'],
-  Sokoto: ['Bodinga', 'Goronyo', 'Gudu', 'Illela'],
-  Taraba: ['Ardo-Kola', 'Donga', 'Jalingo', 'Wukari'],
-  Yobe: ['Bade', 'Damaturu', 'Fika', 'Fune'],
-  Zamfara: ['Anka', 'Bakura', 'Bukkuyum', 'Gusau'],
+  'Abia State': ['Aba North', 'Aba South', 'Arochukwu', 'Bende', 'Ikwuano', 'Isiala Ngwa North', 'Isiala Ngwa South', 'Isiukwuato', 'Obi Ngwa', 'Ohafia', 'Osisioma', 'Ugwunagbo', 'Ukwa East', 'Ukwa West', 'Umuahia North', 'Umuahia South', 'Umunneochi'],
+   
+  'Adamawa State': ['Demsa', 'Fufure', 'Ganye', 'Girei', 'Gombi', 'Guyuk', 'Hong', 'Jada', 'Lamurde', 'Madagali', 'Maiha', 'Mayo-Belwa', 'Michika', 'Mubi North', 'Mubi South', 'Numan', 'Shelleng', 'Song', 'Toungo', 'Yola North', 'Yola South'],
+   
+  'Akwa Ibom State': ['Abak', 'Eastern Obolo', 'Eket', 'Esit Eket', 'Essien Udim', 'Etim Ekpo', 'Etinan', 'Ibeno', 'Ibesikpo Asutan', 'Ibiono Ibom', 'Ika', 'Ikono', 'Ikot Abasi', 'Ikot Ekpene', 'Ini', 'Itu', 'Mbo', 'Mkpat-Enin', 'Nsit-Atai', 'Nsit-Ibom', 'Nsit-Ubium', 'Obot Akara', 'Okobo', 'Onna', 'Oron', 'Oruk Anam', 'Udung-Uko', 'Ukanafun', 'Uruan', 'Urue-Offong/Oruko', 'Uyo'],
+   
+  'Anambra State': ['Aguata', 'Anambra East', 'Anambra West', 'Anaocha', 'Awka North', 'Awka South', 'Ayamelum', 'Dunukofia', 'Ekwusigo', 'Idemili North', 'Idemili South', 'Ihiala', 'Njikoka', 'Nnewi North', 'Nnewi South', 'Ogbaru', 'Onitsha North', 'Onitsha South', 'Orumba North', 'Orumba South', 'Oyi'],
+
+  'Bauchi State': ['Alkaleri', 'Bauchi', 'Bogoro', 'Damban', 'Darazo', 'Dass', 'Gamawa', 'Ganjuwa', 'Giade', 'Itas/Gadau', 'Jama’are', 'Katagum', 'Kirfi', 'Misau', 'Ningi', 'Shira', 'Tafawa Balewa', 'Toro', 'Warji', 'Zaki'],
+
+  'Bayelsa State': ['Brass', 'Ekeremor', 'Kolokuma/Opokuma', 'Nembe', 'Ogbia', 'Sagbama', 'Southern Ijaw', 'Yenagoa'],
+
+  'Benue State': ['Ado', 'Agatu', 'Apa', 'Buruku', 'Gboko', 'Guma', 'Gwer East', 'Gwer West', 'Katsina-Ala', 'Konshisha', 'Kwande', 'Logo', 'Makurdi', 'Obi', 'Ogbadibo', 'Ohimini', 'Oju', 'Okpokwu', 'Otukpo', 'Tarka', 'Ukum', 'Ushongo', 'Vandeikya'],
+
+  'Borno State': ['Abadam', 'Askira/Uba', 'Bama', 'Bayo', 'Biu', 'Chibok', 'Damboa', 'Dikwa', 'Gubio', 'Guzamala', 'Gwoza', 'Hawul', 'Jere', 'Kaga', 'Kala/Balge', 'Konduga', 'Kukawa', 'Kwaya Kusar', 'Mafa', 'Magumeri', 'Maiduguri', 'Marte', 'Mobbar', 'Monguno', 'Ngala', 'Nganzai', 'Shani'],
+
+  'Cross River State': ['Abi', 'Akamkpa', 'Akpabuyo', 'Bakassi', 'Bekwarra', 'Biase', 'Boki', 'Calabar Municipal', 'Calabar South', 'Etung', 'Ikom', 'Obanliku', 'Obubra', 'Obudu', 'Odukpani', 'Ogoja', 'Yakuur', 'Yala'],
+
+  'Delta State': ['Aniocha North', 'Aniocha South', 'Bomadi', 'Burutu', 'Ethiope East', 'Ethiope West', 'Ika North East', 'Ika South', 'Isoko North', 'Isoko South', 'Ndokwa East', 'Ndokwa West', 'Okpe', 'Oshimili North', 'Oshimili South', 'Patani', 'Sapele', 'Udu', 'Ughelli North', 'Ughelli South', 'Ukwuani', 'Uvwie', 'Warri North', 'Warri South', 'Warri South West'],
+
+  'Ebonyi State': ['Abakaliki', 'Afikpo North', 'Afikpo South', 'Ebonyi', 'Ezza North', 'Ezza South', 'Ikwo', 'Ishielu', 'Ivo', 'Izzi', 'Ohaozara', 'Ohaukwu', 'Onicha'],
+
+  'Edo State': ['Akoko-Edo', 'Egor', 'Esan Central', 'Esan North-East', 'Esan South-East', 'Esan West', 'Etsako Central', 'Etsako East', 'Etsako West', 'Igueben', 'Ikpoba-Okha', 'Oredo', 'Orhionmwon', 'Ovia North-East', 'Ovia South-West', 'Owan East', 'Owan West', 'Uhunmwonde'],
+
+  'Ekiti State': ['Ado Ekiti', 'Efon', 'Ekiti East', 'Ekiti South-West', 'Ekiti West', 'Emure', 'Gbonyin', 'Ido Osi', 'Ijero', 'Ikere', 'Ikole', 'Ilejemeje', 'Irepodun/Ifelodun', 'Ise/Orun', 'Moba', 'Oye'],
+
+  'Enugu State': ['Aninri', 'Awgu', 'Enugu East', 'Enugu North', 'Enugu South', 'Ezeagu', 'Igbo Etiti', 'Igbo Eze North', 'Igbo Eze South', 'Isi Uzo', 'Nkanu East', 'Nkanu West', 'Nsukka', 'Oji River', 'Udenu', 'Udi', 'Uzo Uwani'],
+
+  'Gombe State': ['Akko', 'Balanga', 'Billiri', 'Dukku', 'Funakaye', 'Gombe', 'Kaltungo', 'Kwami', 'Nafada', 'Shongom', 'Yamaltu/Deba'],
+
+  'Imo State': ['Aboh Mbaise', 'Ahiazu Mbaise', 'Ehime Mbano', 'Ezinihitte', 'Ideato North', 'Ideato South', 'Ihitte/Uboma', 'Ikeduru', 'Isiala Mbano', 'Isu', 'Mbaitoli', 'Ngor Okpala', 'Njaba', 'Nkwerre', 'Nwangele', 'Obowo', 'Oguta', 'Ohaji/Egbema', 'Okigwe', 'Onuimo', 'Orlu', 'Orsu', 'Oru East', 'Oru West', 'Owerri Municipal', 'Owerri North', 'Owerri West'],
+
+  'Jigawa State': ['Auyo', 'Babura', 'Biriniwa', 'Birnin Kudu', 'Buji', 'Dutse', 'Gagarawa', 'Garki', 'Gumel', 'Guri', 'Gwaram', 'Gwiwa', 'Hadejia', 'Jahun', 'Kafin Hausa', 'Kaugama', 'Kazaure', 'Kiri Kasama', 'Kiyawa', 'Maigatari', 'Malam Madori', 'Miga', 'Ringim', 'Roni', 'Sule Tankarkar', 'Taura', 'Yankwashi'],
+
+  'Kaduna State': ['Birnin Gwari', 'Chikun', 'Giwa', 'Igabi', 'Ikara', 'Jaba', 'Jema\'a', 'Kachia', 'Kaduna North', 'Kaduna South', 'Kagarko', 'Kajuru', 'Kaura', 'Kauru', 'Kubau', 'Kudan', 'Lere', 'Makarfi', 'Sabon Gari', 'Sanga', 'Soba', 'Zangon Kataf', 'Zaria'],
+
+  'Kano State': ['Ajingi', 'Albasu', 'Bagwai', 'Bebeji', 'Bichi', 'Bunkure', 'Dala', 'Dambatta', 'Dawakin Kudu', 'Dawakin Tofa', 'Doguwa', 'Fagge', 'Gabasawa', 'Garko', 'Garun Mallam', 'Gaya', 'Gezawa', 'Gwale', 'Gwarzo', 'Kabo', 'Kano Municipal', 'Karaye', 'Kibiya', 'Kiru', 'Kumbotso', 'Kunchi', 'Kura', 'Madobi', 'Makoda', 'Minjibir', 'Nasarawa', 'Rano', 'Rimin Gado', 'Rogo', 'Shanono', 'Sumaila', 'Takai', 'Tarauni', 'Tofa', 'Tsanyawa', 'Tudun Wada', 'Ungogo', 'Warawa', 'Wudil'],
+
+  'Katsina State': ['Bakori', 'Batagarawa', 'Batsari', 'Baure', 'Bindawa', 'Charanchi', 'Dandume', 'Danja', 'Dan Musa', 'Daura', 'Dutsi', 'Dutsin Ma', 'Faskari', 'Funtua', 'Ingawa', 'Jibia', 'Kafur', 'Kaita', 'Kankara', 'Kankia', 'Katsina', 'Kurfi', 'Kusada', 'Mai\'Adua', 'Malumfashi', 'Mani', 'Mashi', 'Matazu', 'Musawa', 'Rimi', 'Sabuwa', 'Safana', 'Sandamu', 'Zango'],
+
+  'Kebbi State': ['Aleiro', 'Arewa Dandi', 'Argungu', 'Augie', 'Bagudo', 'Birnin Kebbi', 'Bunza', 'Dandi', 'Fakai', 'Gwandu', 'Jega', 'Kalgo', 'Koko/Besse', 'Maiyama', 'Ngaski', 'Sakaba', 'Shanga', 'Suru', 'Wasagu/Danko', 'Yauri', 'Zuru'],
+
+  'Kogi State': ['Adavi', 'Ajaokuta', 'Ankpa', 'Bassa', 'Dekina', 'Ibaji', 'Idah', 'Igalamela Odolu', 'Ijumu', 'Kabba/Bunu', 'Kogi', 'Lokoja', 'Mopa Muro', 'Ofu', 'Ogori/Magongo', 'Okehi', 'Okene', 'Olamaboro', 'Omala', 'Yagba East', 'Yagba West'],
+
+  'Kwara State': ['Asa', 'Baruten', 'Edu', 'Ekiti', 'Ifelodun', 'Ilorin East', 'Ilorin South', 'Ilorin West', 'Irepodun', 'Isin', 'Kaiama', 'Moro', 'Offa', 'Oke Ero', 'Oyun', 'Pategi'],
+
+  'Lagos State': ['Agege', 'Ajeromi-Ifelodun', 'Alimosho', 'Amuwo-Odofin', 'Apapa', 'Badagry', 'Epe', 'Eti Osa', 'Ibeju-Lekki', 'Ifako-Ijaiye', 'Ikeja', 'Ikorodu', 'Kosofe', 'Lagos Island', 'Lagos Mainland', 'Mushin', 'Ojo', 'Oshodi-Isolo', 'Shomolu', 'Surulere'],
+
+  'Nasarawa State': ['Akwanga', 'Awe', 'Doma', 'Karu', 'Keana', 'Keffi', 'Kokona', 'Lafia', 'Nasarawa', 'Nasarawa Egon', 'Obi', 'Toto', 'Wamba'],
+
+  'Niger State': ['Agaie', 'Agwara', 'Bida', 'Borgu', 'Bosso', 'Chanchaga', 'Edati', 'Gbako', 'Gurara', 'Katcha', 'Kontagora', 'Lapai', 'Lavun', 'Magama', 'Mariga', 'Mashegu', 'Mokwa', 'Muya', 'Paikoro', 'Rafi', 'Rijau', 'Shiroro', 'Suleja', 'Tafa', 'Wushishi'],
+
+  'Ogun State': ['Abeokuta North', 'Abeokuta South', 'Ado-Odo/Ota', 'Egbado North', 'Egbado South', 'Ewekoro', 'Ifo', 'Ijebu East', 'Ijebu North', 'Ijebu North East', 'Ijebu Ode', 'Ikenne', 'Imeko Afon', 'Ipokia', 'Obafemi Owode', 'Odeda', 'Odogbolu', 'Ogun Waterside', 'Remo North', 'Shagamu'],
+
+  'Ondo State': ['Akoko North-East', 'Akoko North-West', 'Akoko South-East', 'Akoko South-West', 'Akure North', 'Akure South', 'Ese Odo', 'Idanre', 'Ifedore', 'Ilaje', 'Ile Oluji/Okeigbo', 'Irele', 'Odigbo', 'Okitipupa', 'Ondo East', 'Ondo West', 'Ose', 'Owo'],
+
+  'Osun State': ['Atakunmosa East', 'Atakunmosa West', 'Aiyedaade', 'Aiyedire', 'Boluwaduro', 'Boripe', 'Ede North', 'Ede South', 'Egbedore', 'Ejigbo', 'Ife Central', 'Ife East', 'Ife North', 'Ife South', 'Ifedayo', 'Ifelodun', 'Ila', 'Ilesa East', 'Ilesa West', 'Irepodun', 'Irewole', 'Isokan', 'Iwo', 'Obokun', 'Odo Otin', 'Ola Oluwa', 'Olorunda', 'Oriade', 'Orolu'],
+
+  'Oyo State': ['Afijio', 'Akinyele', 'Atiba', 'Atisbo', 'Egbeda', 'Ibadan North', 'Ibadan North-East', 'Ibadan North-West', 'Ibadan South-East', 'Ibadan South-West', 'Ibarapa Central', 'Ibarapa East', 'Ibarapa North', 'Ido', 'Irepo', 'Iseyin', 'Itesiwaju', 'Iwajowa', 'Kajola', 'Lagelu', 'Ogbomosho North', 'Ogbomosho South', 'Ogo Oluwa', 'Olorunsogo', 'Oluyole', 'Ona Ara', 'Orelope', 'Ori Ire', 'Oyo East', 'Oyo West', 'Saki East', 'Saki West', 'Surulere'],
+
+  'Plateau State': ['Barkin Ladi', 'Bassa', 'Bokkos', 'Jos East', 'Jos North', 'Jos South', 'Kanam', 'Kanke', 'Langtang North', 'Langtang South', 'Mangu', 'Mikang', 'Pankshin', 'Qua\'an Pan', 'Riyom', 'Shendam', 'Wase'],
+
+  'Rivers State': ['Abua/Odual', 'Ahoada East', 'Ahoada West', 'Akuku-Toru', 'Andoni', 'Asari-Toru', 'Bonny', 'Degema', 'Eleme', 'Emohua', 'Etche', 'Gokana', 'Ikwerre', 'Khana', 'Obio/Akpor', 'Ogba/Egbema/Ndoni', 'Ogu/Bolo', 'Okrika', 'Omuma', 'Opobo/Nkoro', 'Oyigbo', 'Port Harcourt', 'Tai'],
+
+  'Sokoto State': ['Binji', 'Bodinga', 'Dange Shuni', 'Gada', 'Goronyo', 'Gudu', 'Gwadabawa', 'Illela', 'Isa', 'Kebbe', 'Kware', 'Rabah', 'Sabon Birni', 'Shagari', 'Silame', 'Sokoto North', 'Sokoto South', 'Tambuwal', 'Tangaza', 'Tureta', 'Wamako', 'Wurno', 'Yabo'],
+
+  'Taraba State': ['Ardo Kola', 'Bali', 'Donga', 'Gashaka', 'Gassol', 'Ibi', 'Jalingo', 'Karim Lamido', 'Kumi', 'Lau', 'Sardauna', 'Takum', 'Ussa', 'Wukari', 'Yorro', 'Zing'],
+
+  'Yobe State': ['Bade', 'Bursari', 'Damaturu', 'Fika', 'Fune', 'Geidam', 'Gujba', 'Gulani', 'Jakusko', 'Karasuwa', 'Machina', 'Nangere', 'Nguru', 'Potiskum', 'Tarmuwa', 'Yunusari', 'Yusufari'],
+
+  'Zamfara State': ['Anka', 'Bakura', 'Birnin Magaji/Kiyaw', 'Bukkuyum', 'Bungudu', 'Gummi', 'Gusau', 'Kaura Namoda', 'Maradun', 'Maru', 'Shinkafi', 'Talata Mafara', 'Tsafe', 'Zurmi']
+
 };
+
 
 const PaymentForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -54,70 +93,76 @@ const PaymentForm: React.FC = () => {
     contact: '',
     transactionReference: '',
     terminalId: '',
-    date: new Date().toISOString().slice(0, 10),
-    time: new Date().toLocaleTimeString('en-US', { hour12: false }),
-    amountPaid: 0,
-    status: 'Approved',
+    date: '',
+    time: '',
+    amountPaid: '',
+    status: 'Approved', 
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [lgas, setLgas] = useState<string[]>([]);
   const [qrData, setQrData] = useState('');
 
+  // Automatically set the current date and time when the component renders
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const formattedTime = currentDate.toLocaleTimeString(); // Format as HH:MM:SS
+
+    setFormData((prev) => ({
+      ...prev,
+      date: formattedDate,
+      time: formattedTime,
+    }));
+  }, []); // Empty dependency array means this runs only once, when the component mounts
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: 
- name === 'amountPaid' ? parseFloat(value) : value,
+      [name]: name === 'amountPaid' ? parseFloat(value) : value,
     }));
 
     if (name === 'originState' || name === 'destinationState') {
-      setLgas(statesAndLgas[value] || []); // Update LGAs based on the selected state
+      setFormData((prev) => ({
+        ...prev,
+    
+      }));
+      const selectedState = name === 'originState' ? value : formData.originState;
+      const lgasForState = statesAndLgas[selectedState] || [];
+      setLgas(lgasForState); // Update LGAs based on the selected state
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validate form data before submitting
-    if (!formData.payerId || !formData.phoneNumber || !formData.vehicleNumber || !formData.vehicleType ||
-        !formData.originState || !formData.originLga || !formData.destinationState || !formData.destinationLga ||
-        !formData.contact || !formData.transactionReference || !formData.terminalId || !formData.date ||
-        !formData.time || formData.amountPaid <= 0) {
-      alert('Please fill in all required fields.');
-      return;
-    }
-
-    // Format the data for the QR code according to the specified format
+    // Format the data for the QR code
     const formattedQrData = `
-SHF
-Single Haulage Fee
-Date: ${formData.date ? `${formData.date} ${formData.time || ''}` : 'undefined:undefined AM'}
-
-============================
-
-Payer ID: ${formData.payerId || ''}
-Phone Number: ${formData.phoneNumber || ''}
-Vehicle Number: ${formData.vehicleNumber || ''}
-Vehicle Type: ${formData.vehicleType || ''}
-Origin State: ${formData.originState || ''}
-Origin LGA: ${formData.originLga || ''}
-Destination State: ${formData.destinationState || ''}
-Destination LGA: ${formData.destinationLga || ''}
-Contact: ${formData.contact || ''}
-Transaction Reference: ${formData.transactionReference || ''}
-Terminal ID: ${formData.terminalId || ''}
-Date: ${formData.date ? `${formData.date} ${formData.time || ''}` : 'undefined:undefined AM'}
-
-============================
-
-Amount Paid: ₦${formData.amountPaid.toFixed(2)}
-Status: ${formData.status || ''}
+      SHF
+      Single Haulage Fee
+      Date: ${formData.date} ${formData.time}
+      ============================
+      Payer ID: ${formData.payerId}
+      Phone Number: ${formData.phoneNumber}
+      Vehicle Number: ${formData.vehicleNumber}
+      Vehicle Type: ${formData.vehicleType}
+      Origin State: ${formData.originState}
+      Origin LGA: ${formData.originLga}
+      Destination State: ${formData.destinationState}
+      Destination LGA: ${formData.destinationLga}
+      Contact: ${formData.contact}
+      Transaction Reference: ${formData.transactionReference}
+      Terminal ID: ${formData.terminalId}
+    
+      ============================
+    
+      Amount Paid: ₦${formData.amountPaid}
+      Status: ${formData.status}
     `.trim();
 
-    console.log('Form Data for QR Code:', formattedQrData); // Log the formatted QR data
+    console.log('Form Data for QR Code:', formattedQrData);
     setQrData(formattedQrData);
     setSubmitted(true);
   };
@@ -125,9 +170,11 @@ Status: ${formData.status || ''}
   return (
     <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg">
       {!submitted ? (
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto grid grid-cols-1 gap-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="payerId">Payer ID</label>
+            </div>
             <input
               type="text"
               id="payerId"
@@ -135,12 +182,14 @@ Status: ${formData.status || ''}
               required
               value={formData.payerId}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="phoneNumber">Phone Number</label>
+            </div>
             <input
               type="tel"
               id="phoneNumber"
@@ -153,7 +202,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="vehicleNumber">Vehicle Number</label>
+            </div>
             <input
               type="text"
               id="vehicleNumber"
@@ -166,7 +217,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="vehicleType">Vehicle Type</label>
+            </div>
             <input
               type="text"
               id="vehicleType"
@@ -179,7 +232,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="originState">Origin State</label>
+            </div>
             <select
               id="originState"
               name="originState"
@@ -188,15 +243,19 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select a state</option>
+              <option value="">Select State</option>
               {Object.keys(statesAndLgas).map((state) => (
-                <option key={state} value={state}>{state}</option>
+                <option key={state} value={state}>
+                  {state}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="originLga">Origin LGA</label>
+            </div>
             <select
               id="originLga"
               name="originLga"
@@ -205,15 +264,19 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select an LGA</option>
+              <option value="">Select LGA</option>
               {lgas.map((lga) => (
-                <option key={lga} value={lga}>{lga}</option>
+                <option key={lga} value={lga}>
+                  {lga}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="destinationState">Destination State</label>
+            </div>
             <select
               id="destinationState"
               name="destinationState"
@@ -222,15 +285,19 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select a state</option>
+              <option value="">Select State</option>
               {Object.keys(statesAndLgas).map((state) => (
-                <option key={state} value={state}>{state}</option>
+                <option key={state} value={state}>
+                  {state}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="destinationLga">Destination LGA</label>
+            </div>
             <select
               id="destinationLga"
               name="destinationLga"
@@ -239,15 +306,19 @@ Status: ${formData.status || ''}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select an LGA</option>
+              <option value="">Select LGA</option>
               {lgas.map((lga) => (
-                <option key={lga} value={lga}>{lga}</option>
+                <option key={lga} value={lga}>
+                  {lga}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="contact">Contact</label>
+            </div>
             <input
               type="text"
               id="contact"
@@ -260,7 +331,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="transactionReference">Transaction Reference</label>
+            </div>
             <input
               type="text"
               id="transactionReference"
@@ -273,7 +346,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="terminalId">Terminal ID</label>
+            </div>
             <input
               type="text"
               id="terminalId"
@@ -286,7 +361,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="date">Date</label>
+            </div>
             <input
               type="date"
               id="date"
@@ -299,7 +376,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="time">Time</label>
+            </div>
             <input
               type="time"
               id="time"
@@ -312,7 +391,9 @@ Status: ${formData.status || ''}
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="amountPaid">Amount Paid</label>
+            </div>
             <input
               type="number"
               id="amountPaid"
@@ -321,11 +402,15 @@ Status: ${formData.status || ''}
               value={formData.amountPaid}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              min="0"
+              step="0.01"
             />
           </div>
 
           <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="status">Status</label>
+            </div>
             <input
               type="text"
               id="status"
@@ -337,13 +422,15 @@ Status: ${formData.status || ''}
             />
           </div>
 
-          <button type="submit" className="mt-4 bg-blue-600 text-white rounded-lg p-3 hover:bg-blue-700">
-            Submit
+          <button type="submit" className="bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600">
+            Generate QR Code
           </button>
         </form>
       ) : (
-        <PaymentDetails qrData={qrData}
-        />
+        <div className="mt-6">
+          <PaymentDetails {...formData} />
+          <QRCode data={qrData} />
+        </div>
       )}
     </div>
   );
