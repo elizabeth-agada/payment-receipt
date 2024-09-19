@@ -38,27 +38,25 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
 }) => {
   return (
     <div>
-      <p className='text-xs'>SHF</p>
-      <p className='text-xs>Single Haulage Fee</p>
-      <p className='text-xs>Date: {date}</p>
-      <p className='text-xs'>Time: {time}</p>
-      <p className=""> ============================</p>
-      <p className='text-xs'>Payer ID: {payerId}</p>
-      <p className='text-xs'>Phone Number: {phoneNumber}</p>
-      <p className='text-xs'>Vehicle Number: {vehicleNumber}</p>
-      <p className='w-64'>Vehicle Type: {vehicleType}</p>
-      <p className='text-xs'>Origin State: {originState}</p>
-      <p className='text-xs'>Origin LGA: {originLga}</p>
-      <p className='text-xs'>Destination State: {destinationState}</p>
-      <p className='text-xs'>Destination LGA: {destinationLga}</p>
-      <p className='text-xs'>Contact: {contact}</p>
-      <p className='w-64'>Transaction Reference: {transactionReference}</p>
-      <p className='text-xs'>Terminal ID: {terminalId}</p>
-      <p className='text-xs'>Date: {date}</p>
-      <p className='text-xs'>Time: {time}</p>
-      <p className=""> ============================</p>
-      <p className='text-xs'>Amount Paid: {amountPaid}</p>
-      <p className='font-semibold text-2xl'>Status: {status}</p>
+      <h2 className=''>SHF</h2>
+      <h2 className=''>Single Haulage Fee</h2>
+      <p className='text-xs'>{date} {time}</p>
+      <p className="">=====================</p>
+      <p className='text-sm'>Payer ID: {payerId}</p>
+      <p className='text-sm'>Phone Number: {phoneNumber}</p>
+      <p className='text-sm'>Vehicle Number: {vehicleNumber}</p>
+      <p className='w-48 text-sm'>Vehicle Type: {vehicleType}</p>
+      <p className='text-sm'>Origin State: {originState}</p>
+      <p className='text-sm'>Origin LGA: {originLga}</p>
+      <p className='text-sm'>Destination State: {destinationState}</p>
+      <p className='text-sm'>Destination LGA: {destinationLga}</p>
+      <p className='text-sm'>Contact: {contact}</p>
+      <p className='w-56 text-sm'>Transaction Reference: {transactionReference}</p>
+      <p className='text-sm'>Terminal ID: {terminalId}</p>
+      <p className='text-sm'>Date: {date} {time}</p>
+      <p className="">=====================</p>
+      <p className='font-semibold text-lg'>Amount Paid: {amountPaid}</p>
+      <p className='font-semibold text-lg'>Status: {status}</p>
     </div>
   );
 };

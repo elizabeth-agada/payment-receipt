@@ -3,14 +3,15 @@ import QRCode from 'react-qr-code';
 
 interface QRCodeProps {
   data: string;
+  size?: number;  // Optional size prop
 }
 
-const QRCodeComponent: React.FC<QRCodeProps> = ({ data }) => {
+const QRCodeComponent: React.FC<QRCodeProps> = ({ data, size = 170 }) => {
   return (
-    <div>
-      <QRCode value={data} />
-      <p className="">============================</p> 
-      <p className="">powered by Citiserve</p>
+    <div className=''>
+      <QRCode value={data} size={size} className='text-sm px-2'/>
+      <p className="">=====================</p> 
+      <p className="text-sm">powered by Citiserve</p>
     </div>
   );
 };
