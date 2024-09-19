@@ -80,6 +80,12 @@ const statesAndLgas: { [key: string]: string[] } = {
 };
 
 
+const generateTransactionReference = () => {
+  const timestamp = Date.now(); // Current timestamp
+  const randomNum = Math.floor(Math.random() * 10000); // Generate a random number
+  return `TX-${timestamp}-${randomNum}`; // Format as desired
+};
+
 const PaymentForm: React.FC = () => {
   const [formData, setFormData] = useState({
     payerId: '',
@@ -91,12 +97,12 @@ const PaymentForm: React.FC = () => {
     destinationState: '',
     destinationLga: '',
     contact: '',
-    transactionReference: '',
+    transactionReference: generateTransactionReference(), // Automatically generate here
     terminalId: '',
     date: '',
     time: '',
     amountPaid: '',
-    status: 'Approved', 
+    status: 'Approved',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -113,6 +119,7 @@ const PaymentForm: React.FC = () => {
       ...prev,
       date: formattedDate,
       time: formattedTime,
+      transactionReference: generateTransactionReference(), // Regenerate transaction reference if needed
     }));
   }, []); // Empty dependency array means this runs only once, when the component mounts
 
@@ -125,10 +132,6 @@ const PaymentForm: React.FC = () => {
     }));
 
     if (name === 'originState' || name === 'destinationState') {
-      setFormData((prev) => ({
-        ...prev,
-    
-      }));
       const selectedState = name === 'originState' ? value : formData.originState;
       const lgasForState = statesAndLgas[selectedState] || [];
       setLgas(lgasForState); // Update LGAs based on the selected state
@@ -376,9 +379,7 @@ const PaymentForm: React.FC = () => {
           </div>
 
           <div className="flex flex-col">
-            <div className="">
             <label className="mb-1 font-semibold" htmlFor="time">Time</label>
-            </div>
             <input
               type="time"
               id="time"
@@ -387,6 +388,18 @@ const PaymentForm: React.FC = () => {
               value={formData.time}
               onChange={handleChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="HH:MM"
+            />
+            {/* Fallback input for unsupported browsers */}
+            <input
+              type="text"
+              id="timeFallback"
+              name="timeFallback"
+              required
+              value={formData.time}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 hidden"
+              placeholder="HH:MM"
             />
           </div>
 

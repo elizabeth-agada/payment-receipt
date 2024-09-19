@@ -4,12 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "tailwindcss": "npx tailwindcss -i src/styles/index.css -o src/styles/output.css --watch"
-  },
+  "dev": "vite",
+  "build": "tsc -b && vite build react-scripts build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "tailwindcss": "npx tailwindcss -i src/styles/index.css -o src/styles/output.css --watch",
+  "start": "react-scripts start",
+  "electron-start": "electron .",
+  "electron-dev": "concurrently \"npm run dev\" \"npm run tailwindcss\" \"npm run electron-start\""
+},
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -22,6 +25,8 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "electron": "^32.1.1",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",

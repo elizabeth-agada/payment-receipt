@@ -18,6 +18,7 @@ interface PaymentDetailsProps {
   status?: string; // Make status optional
 }
 
+
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   payerId,
   phoneNumber,
