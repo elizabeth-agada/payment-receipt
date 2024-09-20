@@ -15,7 +15,7 @@ interface PaymentDetailsProps {
   date: string;
   time: string;
   amountPaid: string;
-  status?: string; // Make status optional
+  status?: string; 
 }
 
 
@@ -34,7 +34,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   date,
   time,
   amountPaid,
-  status = 'Not provided', // Default value
+  status = 'Not provided', // 
 }) => {
   return (
     <div className='px-2'>
