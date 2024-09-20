@@ -277,82 +277,82 @@ const PaymentForm: React.FC = () => {
           </div>
 
           <div className="flex flex-col">
-  <label className="mb-1 font-semibold" htmlFor="originState">Origin State</label>
-  <select
-    id="originState"
-    name="originState"
-    required
-    value={originState}
-    onChange={handleOriginStateChange}
-    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  >
-    <option value="">Select State</option>
-    {Object.keys(statesWithLgas).map((state) => (
-      <option key={state} value={state}>
-        {state}
-      </option>
-    ))}
-  </select>
-</div>
+            <label className="mb-1 font-semibold" htmlFor="originState">Origin State</label>
+            <select
+              id="originState"
+              name="originState"
+              required
+              value={originState}
+              onChange={handleOriginStateChange}
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select State</option>
+              {Object.keys(statesWithLgas).map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
 
-<div className="flex flex-col">
-  <label className="mb-1 font-semibold" htmlFor="originLga">Origin LGA</label>
-  <select
-    id="originLga"
-    name="originLga"
-    required
-    value={originLga}
-    onChange={handleOriginLgaChange}
-    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  >
-    <option value="">Select LGA</option>
-    {originState &&
-      statesWithLgas[originState]?.map((lga) => (
-        <option key={lga} value={lga}>
-          {lga}
-        </option>
-      ))}
-  </select>
-</div>
+          <div className="flex flex-col">
+            <label className="mb-1 font-semibold" htmlFor="originLga">Origin LGA</label>
+            <select
+              id="originLga"
+              name="originLga"
+              required
+              value={originLga}
+              onChange={handleOriginLgaChange}
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select LGA</option>
+              {originState &&
+                statesWithLgas[originState]?.map((lga) => (
+                  <option key={lga} value={lga}>
+                    {lga}
+                  </option>
+                ))}
+            </select>
+          </div>
 
-<div className="flex flex-col">
-  <label className="mb-1 font-semibold" htmlFor="destinationState">Destination State</label>
-  <select
-    id="destinationState"
-    name="destinationState"
-    required
-    value={destinationState}
-    onChange={handleDestinationStateChange}
-    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  >
-    <option value="">Select State</option>
-    {Object.keys(statesWithLgas).map((state) => (
-      <option key={state} value={state}>
-        {state}
-      </option>
-    ))}
-  </select>
-</div>
+          <div className="flex flex-col">
+            <label className="mb-1 font-semibold" htmlFor="destinationState">Destination State</label>
+            <select
+              id="destinationState"
+              name="destinationState"
+              required
+              value={destinationState}
+              onChange={handleDestinationStateChange}
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select State</option>
+              {Object.keys(statesWithLgas).map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
 
-<div className="flex flex-col">
-  <label className="mb-1 font-semibold" htmlFor="destinationLga">Destination LGA</label>
-  <select
-    id="destinationLga"
-    name="destinationLga"
-    required
-    value={destinationLga}
-    onChange={handleDestinationLgaChange}
-    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  >
-    <option value="">Select LGA</option>
-    {destinationState &&
-      statesWithLgas[destinationState].map((lga) => (
-        <option key={lga} value={lga}>
-          {lga}
-        </option>
-      ))}
-  </select>
-</div>
+          <div className="flex flex-col">
+            <label className="mb-1 font-semibold" htmlFor="destinationLga">Destination LGA</label>
+            <select
+              id="destinationLga"
+              name="destinationLga"
+              required
+              value={destinationLga}
+              onChange={handleDestinationLgaChange}
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select LGA</option>
+              {destinationState &&
+                statesWithLgas[destinationState].map((lga) => (
+                  <option key={lga} value={lga}>
+                    {lga}
+                  </option>
+                ))}
+            </select>
+          </div>
 
 
           <div className="flex flex-col">
