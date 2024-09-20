@@ -40,7 +40,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
     <div className='px-2'>
       <h2 className=''>SHF</h2>
       <h2 className=''>Single Haulage Fee</h2>
-      <p className='text-xs'>{date} {time}</p>
+      <p className='text-sm'>{date} {time}</p>
       <p className="">=====================</p>
       <p className='text-sm'>Payer ID: {payerId}</p>
       <p className='text-sm'>Phone Number: {phoneNumber}</p>

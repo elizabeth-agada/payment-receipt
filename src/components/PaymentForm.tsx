@@ -175,11 +175,6 @@ const PaymentForm: React.FC = () => {
       [name]: name === 'amountPaid' ? parseFloat(value) : value,
     }));
 
-    if (name === 'time') {
-      // Fallback for unsupported browsers
-      const timeFallback = document.getElementById('timeFallback') as HTMLInputElement;
-      timeFallback.value = value;
-    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -410,7 +405,7 @@ const PaymentForm: React.FC = () => {
             <label className="mb-1 font-semibold" htmlFor="date">Date</label>
             </div>
             <input
-              type="date"
+              type="datetime"
               id="date"
               name="date"
               required
@@ -420,30 +415,7 @@ const PaymentForm: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-col">
-            <label className="mb-1 font-semibold" htmlFor="time">Time</label>
-            <input
-              type="time"
-              id="time"
-              name="time"
-              required
-              value={formData.time}
-              onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="HH:MM"
-            />
-            {/* Fallback input for unsupported browsers */}
-            <input
-              type="text"
-              id="timeFallback"
-              name="timeFallback"
-              required
-              value={formData.time}
-              onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 hidden"
-              placeholder="HH:MM"
-            />
-          </div>
+          
 
           <div className="flex flex-col">
             <div className="">
