@@ -4,7 +4,7 @@ import QRCode from './QRCode';
 
 
 // States and their respective LGAs
-const statesAndLgas: { [key: string]: string[] } = {
+const statesWithLgas: { [key: string]: string[] } = {
   'Abia State': ['Aba North', 'Aba South', 'Arochukwu', 'Bende', 'Ikwuano', 'Isiala Ngwa North', 'Isiala Ngwa South', 'Isiukwuato', 'Obi Ngwa', 'Ohafia', 'Osisioma', 'Ugwunagbo', 'Ukwa East', 'Ukwa West', 'Umuahia North', 'Umuahia South', 'Umunneochi'],
    
   'Adamawa State': ['Demsa', 'Fufure', 'Ganye', 'Girei', 'Gombi', 'Guyuk', 'Hong', 'Jada', 'Lamurde', 'Madagali', 'Maiha', 'Mayo-Belwa', 'Michika', 'Mubi North', 'Mubi South', 'Numan', 'Shelleng', 'Song', 'Toungo', 'Yola North', 'Yola South'],
@@ -86,6 +86,11 @@ const generateTransactionReference = () => {
 };
 
 const PaymentForm: React.FC = () => {
+  const [originState, setOriginState] = useState<string>('');
+  const [originLga, setOriginLga] = useState<string>('');
+  const [destinationState, setDestinationState] = useState<string>('');
+  const [destinationLga, setDestinationLga] = useState<string>('');
+
   const [formData, setFormData] = useState({
     payerId: '',
     phoneNumber: '',
@@ -105,7 +110,7 @@ const PaymentForm: React.FC = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [lgas, setLgas] = useState<string[]>([]);
+  // const [lgas, setLgas] = useState<string[]>([]);
   const [qrData, setQrData] = useState('');
 
   // Automatically set the current date and time when the component renders
@@ -122,6 +127,16 @@ const PaymentForm: React.FC = () => {
     }));
   }, []); // Empty dependency array means this runs only once, when the component mounts
 
+  const handleOriginStateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setOriginState(event.target.value);
+    setOriginLga(''); // Reset the origin LGA when the state changes
+  };
+
+  const handleDestinationStateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setDestinationState(event.target.value);
+    setDestinationLga(''); // Reset the destination LGA when the state changes
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
@@ -130,12 +145,6 @@ const PaymentForm: React.FC = () => {
       [name]: name === 'amountPaid' ? parseFloat(value) : value,
     }));
 
-    if (name === 'originState' || name === 'destinationState') {
-      const selectedState = name === 'originState' ? value : formData.originState;
-      const lgasForState = statesAndLgas[selectedState] || [];
-      setLgas(lgasForState); // Update LGAs based on the selected state
-    } else
-    
     if (name === 'time') {
       // Fallback for unsupported browsers
       const timeFallback = document.getElementById('timeFallback') as HTMLInputElement;
@@ -247,12 +256,12 @@ const PaymentForm: React.FC = () => {
               id="originState"
               name="originState"
               required
-              value={formData.originState}
-              onChange={handleChange}
+              value={originState}
+              onChange={handleOriginStateChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select State</option>
-              {Object.keys(statesAndLgas).map((state) => (
+              {Object.keys(statesWithLgas).map((state) => (
                 <option key={state} value={state}>
                   {state}
                 </option>
@@ -268,16 +277,17 @@ const PaymentForm: React.FC = () => {
               id="originLga"
               name="originLga"
               required
-              value={formData.originLga}
-              onChange={handleChange}
+              value={originLga}
+              onChange={(e) => setOriginLga(e.target.value)}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select LGA</option>
-              {lgas.map((lga) => (
-                <option key={lga} value={lga}>
-                  {lga}
-                </option>
-              ))}
+              {originState &&
+            statesWithLgas[originState]?.map((lga) => (
+              <option key={lga} value={lga}>
+                {lga}
+              </option>
+            ))}
             </select>
           </div>
 
@@ -289,12 +299,12 @@ const PaymentForm: React.FC = () => {
               id="destinationState"
               name="destinationState"
               required
-              value={formData.destinationState}
-              onChange={handleChange}
+              value={destinationState}
+              onChange={handleDestinationStateChange}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select State</option>
-              {Object.keys(statesAndLgas).map((state) => (
+              {Object.keys(statesWithLgas).map((state) => (
                 <option key={state} value={state}>
                   {state}
                 </option>
@@ -310,16 +320,17 @@ const PaymentForm: React.FC = () => {
               id="destinationLga"
               name="destinationLga"
               required
-              value={formData.destinationLga}
-              onChange={handleChange}
+              value={destinationLga}
+              onChange={(e) => setDestinationLga(e.target.value)}
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select LGA</option>
-              {lgas.map((lga) => (
-                <option key={lga} value={lga}>
-                  {lga}
-                </option>
-              ))}
+              {destinationState &&
+            statesWithLgas[destinationState].map((lga) => (
+              <option key={lga} value={lga}>
+                {lga}
+              </option>
+            ))}
             </select>
           </div>
 
