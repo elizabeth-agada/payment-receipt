@@ -37,7 +37,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   status = 'Not provided', // Default value
 }) => {
   return (
-    <div>
+    <div className='px-2'>
       <h2 className=''>SHF</h2>
       <h2 className=''>Single Haulage Fee</h2>
       <p className='text-xs'>{date} {time}</p>
