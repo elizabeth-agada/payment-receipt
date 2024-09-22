@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PaymentDetails from './PaymentDetails';
 import QRCode from './QRCode';
+import '../App.css';
 
 
 // States and their respective LGAs
@@ -185,7 +186,7 @@ const PaymentForm: React.FC = () => {
 
     // Format the data for the QR code
     const formattedQrData = `
-      SHF
+        SHF
       Single Haulage Fee
       Date: ${formData.date} ${formData.time}
       ============================
@@ -200,7 +201,8 @@ const PaymentForm: React.FC = () => {
       Contact: ${formData.contact}
       Transaction Reference: ${formData.transactionReference}
       Terminal ID: ${formData.terminalId}
-    
+      ${formData.date} ${formData.time}
+   
       ============================
     
       Amount Paid: ₦${formData.amountPaid}
@@ -213,7 +215,7 @@ const PaymentForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto bg-white">
+    <div className="container print-container mx-auto">
       {!submitted ? (
         <form onSubmit={handleSubmit} className="grid grid-cols-1 max-w-4xl mx-auto gap-4 p-5">
           <div className="flex flex-col">
@@ -414,8 +416,6 @@ const PaymentForm: React.FC = () => {
               className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
-          
 
           <div className="flex flex-col">
             <div className="">
