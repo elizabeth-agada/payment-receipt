@@ -10,7 +10,7 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({ data, size = 170 }) => {
   return (
     <div className=''>
       <QRCode value={data} size={size} className='text-sm px-2'/>
-      <p className="">=====================</p> 
+      <p className="px-2">=====================</p> 
       <p className="text-sm px-2">powered by Citiserve</p>
     </div>
   );
