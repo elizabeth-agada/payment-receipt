@@ -184,7 +184,6 @@ const PaymentForm: React.FC = () => {
     setSubmitted(true);
     // Perform the submission logic
 
-    // Format the data for the QR code
     const formattedQrData = `
         SHF
       Single Haulage Fee
@@ -407,7 +406,7 @@ const PaymentForm: React.FC = () => {
             <label className="mb-1 font-semibold" htmlFor="date">Date</label>
             </div>
             <input
-              type="datetime"
+              type="date"
               id="date"
               name="date"
               required
