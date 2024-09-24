@@ -102,7 +102,7 @@ const PaymentForm: React.FC = () => {
     destinationState: '',
     destinationLga: '',
     contact: '',
-    transactionReference: generateTransactionReference(),
+    transactionReference:generateTransactionReference(),
     terminalId: '201118TD',
     date: '',
     time: '',
@@ -124,7 +124,7 @@ const PaymentForm: React.FC = () => {
       ...prev,
       date: formattedDate,
       time: formattedTime,
-      transactionReference: generateTransactionReference(), // Regenerate transaction reference if needed
+      transactionReference:generateTransactionReference(), // Regenerate transaction reference if needed
     }));
   }, []); // Empty dependency array means this runs only once, when the component mounts
 
@@ -219,7 +219,7 @@ const PaymentForm: React.FC = () => {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 max-w-4xl mx-auto gap-4 p-5">
           <div className="flex flex-col">
             <div className="">
-            <label className="mb-1 font-semibold" htmlFor="payerId">Payer ID</label>
+            <label className="mb-1 font-semibold" htmlFor="payerId">Payer</label>
             </div>
             <input
               type="text"
