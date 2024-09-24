@@ -418,6 +418,21 @@ const PaymentForm: React.FC = () => {
 
           <div className="flex flex-col">
             <div className="">
+            <label className="mb-1 font-semibold" htmlFor="date">Time</label>
+            </div>
+            <input
+              type="time"
+              id="time"
+              name="time"
+              required
+              value={formData.time}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <div className="">
             <label className="mb-1 font-semibold" htmlFor="amountPaid">Amount Paid</label>
             </div>
             <input
