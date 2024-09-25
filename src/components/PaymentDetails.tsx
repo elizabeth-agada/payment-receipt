@@ -37,7 +37,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   status = 'Not provided',
 }) => {
   return (
-    <div className="">
+    <div className="w-full">
       <h2 className="receipt-header">SHF</h2>
       <h2 className="receipt-subheader">Single Haulage Fee</h2>
       <p className="text-sm">{date} {time}</p>
