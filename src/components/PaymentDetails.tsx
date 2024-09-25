@@ -40,20 +40,20 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
     <div className="">
       <h2 className="receipt-header">SHF</h2>
       <h2 className="receipt-subheader">Single Haulage Fee</h2>
-      <p className="">{date} {time}</p>
+      <p className="text-sm">{date} {time}</p>
       <p className="">==============================</p>
-      <p>Payer: {payerId}</p>
-      <p>Phone Number: {phoneNumber}</p>
-      <p>Vehicle Number: {vehicleNumber}</p>
-      <p className='w-60'>Vehicle Type: {vehicleType}</p>
-      <p>Origin State: {originState}</p>
-      <p>Origin LGA: {originLga}</p>
-      <p>Destination State: {destinationState}</p>
-      <p>Destination LGA: {destinationLga}</p>
-      <p>Contact: {contact}</p>
-      <p className='w-60'>Transaction Reference: {transactionReference}</p>
-      <p>Terminal ID: {terminalId}</p>
-      <p className="receipt-date">{date} {time}</p>
+      <p className='text-sm'>Payer: {payerId}</p>
+      <p className='text-sm'>Phone Number: {phoneNumber}</p>
+      <p className='text-sm'>Vehicle Number: {vehicleNumber}</p>
+      <p className='w-60 text-sm'>Vehicle Type: {vehicleType}</p>
+      <p className='text-sm'>Origin State: {originState}</p>
+      <p className='text-sm'>Origin LGA: {originLga}</p>
+      <p className='text-sm'>Destination State: {destinationState}</p>
+      <p className='text-sm'>Destination LGA: {destinationLga}</p>
+      <p className='text-sm'>Contact: {contact}</p>
+      <p className='w-60 text-sm'>Transaction Reference: {transactionReference}</p>
+      <p className='text-sm'>Terminal ID: {terminalId}</p>
+      <p className="receipt-date text-sm">{date} {time}</p>
       <p className="">==============================</p>
       <p className="receipt-amount">Amount Paid: {amountPaid}</p>
       <p className="receipt-status">Status: {status}</p>
