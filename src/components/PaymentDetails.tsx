@@ -43,7 +43,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <h2 className='text-xl font-semibold'>SHF</h2>
       <h2 className='text-xl font-semibold'>Single Haulage Fee</h2>
       <h2 className='text-lg'>{date} {time}</h2>
-      <h2 className="text-lg">======================</h2>
+      <h2 className="text-lg">==============================</h2>
       <h2 className='text-lg'>payer: {payerId}</h2>
       <h2 className='text-lg'>Phone Number: {phoneNumber}</h2>
       <h2 className='text-lg'>Vehicle Number: {vehicleNumber}</h2>
@@ -56,7 +56,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <h2 className='w-48 text-lg'>Transaction Reference: {transactionReference}</h2>
       <h2 className='text-lg'>Terminal ID: {terminalId}</h2>
       <h2 className='text-lg'>Date: {date} {time}</h2>
-      <h2 className="text-lg">=====================</h2>
+      <h2 className="text-lg">==============================</h2>
       <h2 className='font-semibold text-2xl'>Amount Paid: {amountPaid}</h2>
       <h2 className='font-semibold text-2xl'>Status: {status}</h2>
     </>
