@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 
 
 interface PaymentDetailsProps {
@@ -38,26 +39,26 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   status = 'Not provided', // 
 }) => {
   return (
-    <div className='text-base '>
-      <h2 className=''>SHF</h2>
-      <h2 className=''>Single Haulage Fee</h2>
-      <p className=''>{date} {time}</p>
-      <p className="">======================</p>
-      <p className=''>Payer: {payerId}</p>
-      <p className=''>Phone Number: {phoneNumber}</p>
-      <p className=''>Vehicle Number: {vehicleNumber}</p>
-      <p className='w-48'>Vehicle Type: {vehicleType}</p>
-      <p className=''>Origin State: {originState}</p>
-      <p className=''>Origin LGA: {originLga}</p>
-      <p className=''>Destination State: {destinationState}</p>
-      <p className=''>Destination LGA: {destinationLga}</p>
-      <p className=''>Contact: {contact}</p>
-      <p className='w-48'>Transaction Reference: {transactionReference}</p>
-      <p className=''>Terminal ID: {terminalId}</p>
-      <p className=''>Date: {date} {time}</p>
-      <p className="">=====================</p>
-      <p className='font-semibold text-lg'>Amount Paid: {amountPaid}</p>
-      <p className='font-semibold text-lg'>Status: {status}</p>
+    <div className='p-0'>
+      <h2 className='text-xl'>SHF</h2>
+      <h2 className='text-xl'>Single Haulage Fee</h2>
+      <h2 className=''>{date} {time}</h2>
+      <h2 className="">======================</h2>
+      <h2 className=''>payer: {payerId}</h2>
+      <h2 className=''>Phone Number: {phoneNumber}</h2>
+      <h2 className=''>Vehicle Number: {vehicleNumber}</h2>
+      <h2 className='w-48'>Vehicle Tyh2e: {vehicleType}</h2>
+      <h2 className=''>Origin State: {originState}</h2>
+      <h2 className=''>Origin LGA: {originLga}</h2>
+      <h2 className=''>Destination State: {destinationState}</h2>
+      <h2 className=''>Destination LGA: {destinationLga}</h2>
+      <h2 className=''>Contact: {contact}</h2>
+      <h2 className='w-48'>Transaction Reference: {transactionReference}</h2>
+      <h2 className=''>Terminal ID: {terminalId}</h2>
+      <h2 className=''>Date: {date} {time}</h2>
+      <h2 className="">=====================</h2>
+      <h2 className='font-semibold text-xl'>Amount h2aid: {amountPaid}</h2>
+      <h2 className='font-semibold text-xl'>Status: {status}</h2>
     </div>
   );
 };
