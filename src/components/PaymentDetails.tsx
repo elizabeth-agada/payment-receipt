@@ -39,7 +39,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   status = 'Not provided', // 
 }) => {
   return (
-    <div className='w-full'>
+    <>
       <h2 className='text-2xl'>SHF</h2>
       <h2 className='text-2xl'>Single Haulage Fee</h2>
       <h2 className='text-xl'>{date} {time}</h2>
@@ -53,13 +53,13 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
       <h2 className='text-xl'>Destination State: {destinationState}</h2>
       <h2 className='text-xl'>Destination LGA: {destinationLga}</h2>
       <h2 className='text-xl'>Contact: {contact}</h2>
-      <h2 className='w-48'>Transaction Reference: {transactionReference}</h2>
+      <h2 className='w-48 text-xl'>Transaction Reference: {transactionReference}</h2>
       <h2 className='text-xl'>Terminal ID: {terminalId}</h2>
       <h2 className='text-xl'>Date: {date} {time}</h2>
       <h2 className="text-xl">=====================</h2>
       <h2 className='font-semibold text-2xl'>Amount Paid: {amountPaid}</h2>
       <h2 className='font-semibold text-2xl'>Status: {status}</h2>
-    </div>
+    </>
   );
 };
 
