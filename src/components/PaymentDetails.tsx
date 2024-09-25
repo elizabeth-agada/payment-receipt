@@ -1,6 +1,5 @@
 import React from 'react';
-import '../App.css';
-
+import '../App.css'; // Make sure to reference your custom CSS
 
 interface PaymentDetailsProps {
   payerId: string;
@@ -17,9 +16,8 @@ interface PaymentDetailsProps {
   date: string;
   time: string;
   amountPaid: string;
-  status?: string; 
+  status?: string;
 }
-
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   payerId,
@@ -36,30 +34,30 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({
   date,
   time,
   amountPaid,
-  status = 'Not provided', // 
+  status = 'Not provided',
 }) => {
   return (
-    <>
-      <h2 className='text-xl font-semibold'>SHF</h2>
-      <h2 className='text-xl font-semibold'>Single Haulage Fee</h2>
-      <h2 className='text-lg'>{date} {time}</h2>
-      <h2 className="text-lg">==============================</h2>
-      <h2 className='text-lg'>payer: {payerId}</h2>
-      <h2 className='text-lg'>Phone Number: {phoneNumber}</h2>
-      <h2 className='text-lg'>Vehicle Number: {vehicleNumber}</h2>
-      <h2 className='text-lg w-60'>Vehicle Type: {vehicleType}</h2>
-      <h2 className='text-lg'>Origin State: {originState}</h2>
-      <h2 className='text-lg'>Origin LGA: {originLga}</h2>
-      <h2 className='text-lg'>Destination State: {destinationState}</h2>
-      <h2 className='text-lg'>Destination LGA: {destinationLga}</h2>
-      <h2 className='text-lg'>Contact: {contact}</h2>
-      <h2 className='w-48 text-lg'>Transaction Reference: {transactionReference}</h2>
-      <h2 className='text-lg'>Terminal ID: {terminalId}</h2>
-      <h2 className='text-lg'>Date: {date} {time}</h2>
-      <h2 className="text-lg">==============================</h2>
-      <h2 className='font-semibold text-2xl'>Amount Paid: {amountPaid}</h2>
-      <h2 className='font-semibold text-2xl'>Status: {status}</h2>
-    </>
+    <div className="">
+      <h2 className="receipt-header">SHF</h2>
+      <h2 className="receipt-subheader">Single Haulage Fee</h2>
+      <p className="">{date} {time}</p>
+      <p className="">==============================</p>
+      <p>Payer: {payerId}</p>
+      <p>Phone Number: {phoneNumber}</p>
+      <p>Vehicle Number: {vehicleNumber}</p>
+      <p className='w-60'>Vehicle Type: {vehicleType}</p>
+      <p>Origin State: {originState}</p>
+      <p>Origin LGA: {originLga}</p>
+      <p>Destination State: {destinationState}</p>
+      <p>Destination LGA: {destinationLga}</p>
+      <p>Contact: {contact}</p>
+      <p className='w-60'>Transaction Reference: {transactionReference}</p>
+      <p>Terminal ID: {terminalId}</p>
+      <p className="receipt-date">{date} {time}</p>
+      <p className="">==============================</p>
+      <p className="receipt-amount">Amount Paid: {amountPaid}</p>
+      <p className="receipt-status">Status: {status}</p>
+    </div>
   );
 };
 

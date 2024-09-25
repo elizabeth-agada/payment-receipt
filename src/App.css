@@ -33,7 +33,6 @@
   /* Ensure the container fits the page */
   .print-container {
     width: 100%;
-    height: auto; /* Allow auto height to fit content */
     overflow: visible; /* Ensure no content is cut off */
   }
 
@@ -47,5 +46,37 @@
     page-break-inside: avoid; /* Prevent breaking inside this section */
   }
 }
- 
 
+.receipt {
+  font-family: 'Courier New', Courier, monospace; /* Monospace font for that printed look */
+  background-color: #fff;
+  width: 250px; /* A narrow width to mimic a receipt */
+  padding: 10px;
+  border: 1px solid #000; /* Optional border to visualize */
+  margin: 0 auto;
+  text-align: left; /* Align everything to the left */
+}
+
+.receipt-header,
+.receipt-subheader {
+  font-size: 1.1rem;
+  margin: 0; /* Remove extra margins */
+  font-weight: #700;
+}
+
+.receipt-divider {
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+p {
+  font-size: 0.9rem;
+  margin: 0; /* Remove space between the items */
+  padding: 1px 0; /* Slight padding for readability */
+}
+
+.receipt-amount,
+.receipt-status {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
