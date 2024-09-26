@@ -6,7 +6,7 @@ interface QRCodeProps {
   size?: number;  // Optional size prop
 }
 
-const QRCodeComponent: React.FC<QRCodeProps> = ({ data, size = 100 }) => {
+const QRCodeComponent: React.FC<QRCodeProps> = ({ data, size = 200 }) => {
   return (
     <div className=''>
       <QRCode value={data} size={size} className='px-2'/>
