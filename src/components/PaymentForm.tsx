@@ -503,12 +503,4 @@ const PaymentReminder: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
-  // Commenting out the main app functionality
-  // return <MainApp />;
-
-  // Instead, show the payment reminder
-  return <PaymentReminder />;
-};
-
-export default App;
+export default PaymentReminder;
