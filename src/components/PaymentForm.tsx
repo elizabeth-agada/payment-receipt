@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+{/*import React, { useState, useEffect } from 'react';
 import PaymentDetails from './PaymentDetails';
 import QRCode from './QRCode';
 import '../App.css';
@@ -478,5 +478,12 @@ const PaymentForm: React.FC = () => {
   );
 };
 
-export default PaymentForm;
+export default PaymentForm;*/}
 
+function PaymentForm() {
+  return (
+    <div>SHF</div>
+  )
+}
+
+export default PaymentForm
